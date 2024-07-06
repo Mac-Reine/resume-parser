@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'getresult.dart'; // Import GetResult screen
+import 'upload_resume_page.dart';
+import 'settings.dart';
+import 'profile_page.dart';
 
 class DrawerPage extends StatefulWidget {
   const DrawerPage({Key? key}) : super(key: key);
@@ -25,8 +27,8 @@ class _DrawerPageState extends State<DrawerPage> {
     double width = MediaQuery.of(context).size.width;
     return Container(
       width: width,
-      color: Color(0xff1b81f1),
-      padding: EdgeInsets.only(top: 15, bottom: 8, left: 12, right: 12),
+      color: const Color(0xff1b81f1),
+      padding: const EdgeInsets.only(top: 15, bottom: 8, left: 12, right: 12),
       child: Column(
         mainAxisSize: MainAxisSize.max,
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -42,13 +44,13 @@ class _DrawerPageState extends State<DrawerPage> {
 
   Widget avatar() {
     return Container(
-      padding: EdgeInsets.all(2),
-      margin: EdgeInsets.all(8),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(2),
+      margin: const EdgeInsets.all(8),
+      decoration: const BoxDecoration(
         color: Colors.white,
         shape: BoxShape.circle,
       ),
-      child: CircleAvatar(
+      child: const CircleAvatar(
         radius: 40,
         child: Icon(Icons.person),
       ),
@@ -56,8 +58,8 @@ class _DrawerPageState extends State<DrawerPage> {
   }
 
   Widget accountName() {
-    return Padding(
-      padding: const EdgeInsets.only(left: 8.0),
+    return const Padding(
+      padding: EdgeInsets.only(left: 8.0),
       child: Text(
         "Mallace Wanderian",
         style: TextStyle(
@@ -70,7 +72,7 @@ class _DrawerPageState extends State<DrawerPage> {
   }
 
   Widget accountEmail() {
-    return ListTile(
+    return const ListTile(
       contentPadding: EdgeInsets.only(left: 8),
       title: Text(
         "Software Developing Company",
@@ -91,9 +93,24 @@ class _DrawerPageState extends State<DrawerPage> {
     return ListView(
       shrinkWrap: true,
       children: [
-        tile(title: "My Profile", icon: Icons.account_circle, onTap: () {}),
-        tile(title: "Account Settings", icon: Icons.settings, onTap: () {}),
-        tile(title: "Upload Resume", icon: Icons.upload, onTap: () => _showBottomSheet(context)),
+        tile(title: "My Profile", icon: Icons.account_circle, onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const ProfilePage()),
+          );
+        }),
+        tile(title: "Account Settings", icon: Icons.settings, onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const SettingsPage()),
+          );
+        }),
+        tile(title: "Upload Resume", icon: Icons.upload, onTap: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const UploadResumePage()),
+          );
+        }),
         tile(title: "Logout", icon: Icons.logout, onTap: () {}),
       ],
     );
@@ -104,51 +121,6 @@ class _DrawerPageState extends State<DrawerPage> {
       onTap: onTap,
       leading: Icon(icon),
       title: Text(title),
-    );
-  }
-
-  void _showBottomSheet(BuildContext context) {
-    showModalBottomSheet(
-      context: context,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.vertical(top: Radius.circular(20.0)),
-      ),
-      backgroundColor: Colors.black,
-      builder: (BuildContext context) {
-        return Container(
-          height: 200,
-          width: double.infinity,
-          padding: EdgeInsets.all(16),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context);
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
-                ),
-                child: Text('Select Files'),
-              ),
-              SizedBox(height: 8),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.pop(context); // Close bottom sheet
-                  Navigator.push( // Navigate to GetResult screen
-                    context,
-                    MaterialPageRoute(builder: (context) => const GetResult()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  minimumSize: Size(double.infinity, 50),
-                ),
-                child: Text('Get Results'),
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 }
